@@ -16,6 +16,8 @@ az staticwebapp create \
   --resource-group "$resource_group_name" \
   --location $region \
   --source "$(git remote -v | awk '/push/{print $2}')" \
+  --app-location "/" \
+  --output-locaiton "public" \
   --branch "main" \
   --sku "$static_web_app_sku" \
   --login-with-github
