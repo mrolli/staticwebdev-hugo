@@ -17,7 +17,7 @@ az staticwebapp create \
   --location $region \
   --source "$(git remote -v | awk '/push/{print $2}')" \
   --app-location "/" \
-  --output-locaiton "public" \
+  --output-location "public" \
   --branch "main" \
   --sku "$static_web_app_sku" \
   --login-with-github
@@ -37,5 +37,6 @@ while [[ $(date +%s) -le $endtime ]]; do
 done
 
 echo "You can now visit your web server at https://$webapp_url"
-
-echo -e "\nTo deploy the code using the SWA CLI run the command\n  npx swa login --resource-group $resource_group_name --app-name $static_web_app_name"
+echo
+echo "The rendered page will be visible as soon as the workflow action has been run successfull"
+echo "See $(git remote -v | awk '/push/{print $2}')/actions"
