@@ -30,14 +30,14 @@ endtime=$(date -v${runtime} +%s)
 
 while [[ $(date +%s) -le $endtime ]]; do
   if curl -I -s "$webapp_url" >/dev/null; then
-    curl -L -s "$webapp_url" 2>/dev/null | head -n 9
     break
   else
-    sleep 10
+    sleep 5
   fi
 done
 
-echo "You can now visit your (still empty) web app at https://$webapp_url"
+echo ""
+echo "You can now visit your web app at https://$webapp_url"
 echo
 echo "The rendered page will be visible as soon as the workflow action has been run successfully."
 echo "See $repo_url/actions"
