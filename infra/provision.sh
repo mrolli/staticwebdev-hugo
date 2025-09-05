@@ -6,6 +6,7 @@ region=westeurope
 resource_group_name=$(printf "rg-%s" "$workload_name")
 static_web_app_name=$(printf "stapp-%s" "$workload_name")
 static_web_app_sku="Free"
+repo_url=$(git remote -v | awk '/push/{gsub(/\.git$/, "", $2); print $2}')
 
 az group create \
   --name "$resource_group_name" \
@@ -15,7 +16,7 @@ az staticwebapp create \
   --name "$static_web_app_name" \
   --resource-group "$resource_group_name" \
   --location $region \
-  --source "$(git remote -v | awk '/push/{print $2}')" \
+  --source "$repo_url" \
   --app-location "/" \
   --output-location "public" \
   --branch "main" \
@@ -36,7 +37,7 @@ while [[ $(date +%s) -le $endtime ]]; do
   fi
 done
 
-echo "You can now visit your web server at https://$webapp_url"
+echo "You can now visit your (still empty) web app at https://$webapp_url"
 echo
-echo "The rendered page will be visible as soon as the workflow action has been run successfull"
-echo "See $(git remote -v | awk '/push/{print $2}')/actions"
+echo "The rendered page will be visible as soon as the workflow action has been run successfully."
+echo "See $repo_url/actions"
